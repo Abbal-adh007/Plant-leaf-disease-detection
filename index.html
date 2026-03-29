@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body class="login-page">
+
+    <div class="container">
+
+<!-- Login part -->
+        <div class="form-box active" id="login-form">
+            <form>
+                <h2>Login</h2>
+
+                <input type="text" name="emailOrUsername" placeholder="Email or Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+
+                <p style="text-align:right;">
+                    <a href="#">Forgot Password?</a>
+                </p>
+
+                <button type="submit">Login</button>
+
+                <p>Don't have an account?
+                    <a href="#" onclick="showForm('register-form')">Register</a>
+                </p>
+            </form>
+        </div>
+
+<!-- register form part -->
+        <div class="form-box" id="register-form">
+            <form>
+                <h2>Register</h2>
+
+                <input type="text" name="first_name" placeholder="First Name" required>
+                <input type="text" name="last_name" placeholder="Last Name" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <input type="tel" name="phoneNumber" placeholder="Mobile number" required>
+                <input type="text" name="username" placeholder="Username" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <input type="password" name="confirmpassword" placeholder="Confirm Password" required>
+
+                <button type="submit">Register</button>
+
+                <p>Already have an account?
+                    <a href="#" onclick="showForm('login-form')">Login</a>
+                </p>
+            </form>
+        </div>
+
+    </div>
+
+    <script src="script.js"></script>
+
+</body>
+</html>
