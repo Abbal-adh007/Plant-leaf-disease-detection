@@ -19,6 +19,10 @@ body.login-page{
 
 body{
     margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
     background: #f5f7fb;
 }
 
@@ -451,4 +455,20 @@ section{
     margin-bottom: 40px;
     position: relative;
     display: inline-block;
+}
+
+/* history section */
+.history-section{
+    flex: 1;
+    padding: 100px 10%;
+    text-align: center;
+}
+
+.history-item{
+    background: cornsilk;
+    margin: 15px auto;
+    padding: 15px;
+    width: 300px;
+    border-radius: 20px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
 }

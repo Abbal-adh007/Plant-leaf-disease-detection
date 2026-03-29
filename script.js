@@ -16,6 +16,13 @@ const loginForm = document.querySelector("#login-form form");
 if(loginForm){
     loginForm.addEventListener("submit", function(e){ 
         e.preventDefault();
+
+        const formData = new FormData(this);
+        const username = formData.get("emailOrUsername");
+
+        // store username for session
+        localStorage.setItem("username", username);
+
         window.location.href = "home.html";
     });
 }
@@ -88,6 +95,8 @@ function startCamera() {
     const video = document.getElementById("camera");
     const captureBtn = document.getElementById("captureBtn");
 
+    if(!video || !captureBtn) return;
+
     navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
             cameraStream = stream;
@@ -103,6 +112,9 @@ function startCamera() {
 function captureImage() {
     const video = document.getElementById("camera");
     const preview = document.getElementById("preview");
+    const captureBtn = document.getElementById("captureBtn");
+
+    if(!video || !preview) return;
 
     const canvas = document.createElement("canvas");
     const ctx = canvas.getContext("2d");
@@ -122,7 +134,7 @@ function captureImage() {
     }
 
     video.style.display = "none";
-    document.getElementById("captureBtn").style.display = "none";
+    if(captureBtn) captureBtn.style.display = "none";
 }
 
 
@@ -130,6 +142,9 @@ function captureImage() {
 function analyzeImage() {
     const fileInput = document.getElementById("fileInput");
     const preview = document.getElementById("preview");
+    const uploadSection = document.getElementById("upload");
+
+    if (!fileInput || !preview || !uploadSection) return;
 
     if (!fileInput.files.length && preview.style.display === "none") {
         alert("Please upload or capture an image first.");
@@ -148,15 +163,30 @@ function analyzeImage() {
     resultBox.innerHTML = "<p>Analyzing image... ⏳</p>";
 
     resultSection.appendChild(resultBox);
-
-    const uploadSection = document.getElementById("upload");
     uploadSection.insertAdjacentElement("afterend", resultSection);
 
     // demo result
     setTimeout(() => {
+        const result = {
+            disease: "Prem Rog",
+            confidence: "92%",
+            date: new Date().toLocaleString(),
+            image: preview.src
+        };
+
+        // get existing history
+        let history = JSON.parse(localStorage.getItem("history")) || [];
+
+        // add new result
+        history.push(result);
+
+        // save back
+        localStorage.setItem("history", JSON.stringify(history));
+
+        // show result on screen
         resultBox.innerHTML = `
-            <h3>Disease: Prem Rog</h3>
-            <p><b>Confidence:</b> 92%</p>
+            <h3>Disease: ${result.disease}</h3>
+            <p><b>Confidence:</b> ${result.confidence}</p>
         `;
     }, 2000);
 }
@@ -167,7 +197,8 @@ const userIcon = document.getElementById("userIcon");
 const userDropdown = document.getElementById("userDropdown");
 
 if(userIcon && userDropdown){
-    userIcon.addEventListener("click", () => {
+    userIcon.addEventListener("click", (e) => {
+        e.stopPropagation();
         userDropdown.style.display =
             userDropdown.style.display === "flex" ? "none" : "flex";
     });
@@ -196,4 +227,35 @@ if(logoutBtn){
         localStorage.removeItem("username");
         window.location.href = "index.html";
     });
+}
+
+
+// history section 
+const historyContainer = document.getElementById("historyContainer");
+
+if(historyContainer){
+    const history = JSON.parse(localStorage.getItem("history")) || [];
+
+    if(history.length === 0){
+        historyContainer.innerHTML = "<p>No history yet</p>";
+    } else {
+        history.reverse().forEach(item => {
+            const div = document.createElement("div");
+            div.className = "history-item";
+
+            div.innerHTML = `
+                <img src="${item.image}" width="100">
+                <p><b>Disease:</b> ${item.disease}</p>
+                <p><b>Confidence:</b> ${item.confidence}</p>
+                <p>${item.date}</p>
+            `;
+
+            historyContainer.appendChild(div);
+        });
+    }
+}
+
+function clearHistory(){
+    localStorage.removeItem("history");
+    location.reload();
 }

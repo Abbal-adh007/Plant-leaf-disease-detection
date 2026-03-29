@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+    <!-- main header / nav bar -->
+    <section>
+        <nav>
+            <a href="home.html"><img src="images/logo.png"></a>
+
+            <div class="nav-links" id="navLinks">
+                <i class="fa-solid fa-xmark" onclick="hideMenu()"></i>
+                <ul>
+                    <li><a href="home.html">HOME</a></li>
+                    <li><a href="history.html">HISTORY</a></li>
+                    <li><a href="home.html#about">ABOUT</a></li>
+                    <li><a href="#contact">CONTACT</a></li>
+                </ul>
+            </div>
+
+<!-- creating user activity session -->
+        <div class="user-session">
+            <img src="images/user.png" id="userIcon">
+
+            <div class="user-dropdown" id="userDropdown">
+                <p>Hi, John</p>
+                <button id="logoutBtn">
+                    Logout <i class="fa fa-sign-out" aria-hidden="true"></i>
+                </button>
+            </div>
+        </div>
+
+            <i class="fa-solid fa-bars" onclick="showMenu()"></i>
+        </nav>
+        </section>
+
+        <section class="history-section">
+            <h2>Your History</h2>
+            <div id="historyContainer">
+                <button class=secondary-btn onclick="clearHistory()">Clear History</button>
+            </div>
+        </section>
+
+<!-- footer -->
+    <footer id="contact">
+        <h3>Contact Us</h3>
+        <p>Email: projectleaf@gmail.com</p>
+        <p>Phone: 9866115898</p>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
